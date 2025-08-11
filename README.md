@@ -181,8 +181,46 @@
    - Truy vấn phức tạp hơn: do có nhiều bảng và phép nối, các truy vấn SQL phức tạp hơn và có thể chậm hơn so với schema star.
    - Hiệu suất thấp hơn so với star snow vì phải join nhiều bảng
 ## Tuần 3: BigData - Batch Processing
--
-*
+### Apache Spark (RDD, DataFrame)
+### Hadoop HDFS
+#### Hadoop ecosystem là 1 hệ sinh thái gồm nhiều thành phần kết hợp lẫn nhau để hỗ trợ xử lý dữ liệu lớn:
+* Các phần mềm sẽ sử dụng cho từng giai đoạn:
+   - Nhập dữ liệu:flume,sqoop
+   - Chứa data: HDFS, HBase
+   - Xử lý và phân tích: Pig,Hive
+   - Truy cập dữ liệu: Hue
+#### HDFS:
+*  Là một hệ thống tệp tin được phân phối trên nhiều máy chủ tập tin, cho phép lập trình viên truy cập, lưu trữ các tập tin từ bất kì mạng hay máy tính nào.
+*  Là lớp lưu trữ của Hadoop
+*  Cách hoạt động: Chia các file thành các block -> tạo bản sao (replication) của các block-> lưu các block ở các máy khác nhau.
+*  Một số khái niệm cơ bản:
+   - Block(Khối): khối lượng tối thiểu có thể đọc và viết. Size: 64->128 MB.
+   - Node: Là hệ thống duy nhất chịu trách nhiệm và xử lý dữ liệu.
+   - Có 2 loại Node: Primary node(Master Node) và secondary Node(Data Node)
+        - Namenode: là node chính, chịu trách nhiệm quản lý metadata của hệ thống tệp, bao gồm thông tin về cấu trúc thư mục, vị trí tệp và vị trí của các bản sao dữ liệu.Như một quản trị viên để theo dõi và phối hợp với các Datanode
+         - DataNode: là các node chứa dữ liệu thực tế, chịu trách nhiệm lưu trữ và truy xuất các data blocks theo sự điều phối của Name node.
+   - Note: HDFS có cơ chế viết 1 lần và đọc nhiều lần. Mỗi tệp chỉ được ghi 1 lần sau khi khởi tạo và sau đó không được sửa đổi. Nếu muốn cập nhật thì dữ liệu sẽ được ghi dưới 1 tệp mới.
+
+### Parquet/ORC
+#### Parquet
+* Apache parquet: là 1 định dạng cột có sẵn cho bất kì project nào của Hadoop. Nó được thiết kế để hiệu quả và hiệu suất giúp tối ưu hơn các truy vấn phức tạp trên các bộ dữ liệu lớn.
+* Ưu điểm:
+   - Vì lưu trữ theo cột nên giúp tối ưu hóa việc đọc/ ghi trên đĩa và nén dữ liệu hiệu quả hơn. Giảm lượng dữ liệu truyền từ đĩa sang bộ nhớ, dẫn đến hiệu suất truy vấn nhanh hơn. Vì lưu theo kiểu dạng cột nên khi 1 truy vấn chỉ cần dữ liệu từ 2 cột trong 100 cột của tệp dữ liệu thì parquet chỉ lấy dữ liệu từ 2 cột đó, giảm thiểu thao tác đọc/ghi trên đĩa. Ngược lại nếu lưu trữ theo trên row thì khi đọc cần phải đọc lại toàn bộ hàng baoa gồm cả các dữ liệu không cần thiết, gây tốn tài nguyên I/O.
+   - Việc đọc chọn lọc này giảm lượng dữ liệu truyền từ đĩa sang bộ nhớ, giúp tăng tốc độ thực thi truy vấn, đặc biệt với các tác vụ phân tích trong  kho dữ liệu
+   - Parquet hỗ trợ các cấu trúc dữ liệu lồng ghép phức tạp, cho phép thay đổi cách tổ chức dữ liệu.
+   - Parquet hỗ trợ nén và mã hóa => giúp giảm bộ nhớ và cải thiện performance
+* Nhược điểm:
+   - Bởi vì parquet nén và mã hóa theo dạng cột nên, chi phí cho việc ghi dữ liệu khá cao
+   - Không phù hợp với dữ liệu nhỏ bởi vì các ưu điểm của việc lưu theo cột không được phát huy hết mức.
+#### ORC: Optimized row columnar
+* Là kiểu định dạng file khác được sử dụng trong hệ thống Hadoop. Cũng được lưu trữ theo dạng column.
+* Ưu điểm của ORC: 
+   - Nén: ORC cung cấp tốc độ nén ấn tượng hơn parquet. Nó cũng bao gồm các chỉ mục nhẹ được lưu trữ trong tệp, giúp cải thiện hiệu suất đọc
+   - Hỗ trợ các loại phức tạp, bao gồm các structs,lists,maps và union types
+   - Hỗ trợ rất tốt cho các ACID transactions trong Hive, cũng cấp các tính năng như update, delete, và merge.
+* Nhược điểm:
+   - Cộng đồng hỗ trợ ít
+   - Chi phí viết cao 
 ## Tuần 4: Real-time Streaming
 -
 *
