@@ -213,11 +213,12 @@
    - Dữ liệu được phân tán trên nhiều node trong 1 cụm spark, cho phép xử lý // và mở rộng quy mô
 * Là một abstraction cấp cao so với RDD
 #### So Sánh RDD với DataFrame:
-|Tiêu chi | DataFrame | RDD |
-|Cấu trúc | Dữ liệu dạng bảng, có schema cố định | Tập hợp các đối tượng phân tán, không schema |
-|Dễ sử dụng | API cấp cao, giống SQL hoặc Pandas | API cấp thấp, yêu cầu lập trình phức tạp|
-|Linh hoạt| Ít linh hoạt hơn, phù hợp cho dữ liệu có cấu trúc | Rất linh hoạt, phù hợp với dữ liệu không cấu trúc|
-|Hỗ trợ SQL| Có, tích hợp chặt chẽ với SparkSQL| Không hỗ trợ trực tiếp SQL|
+|Tiêu chi   | DataFrame                                         | RDD                                              |
+|-----------|---------------------------------------------------|--------------------------------------------------|
+|Cấu trúc   | Dữ liệu dạng bảng, có schema cố định              | Tập hợp các đối tượng phân tán, không schema     |
+|Dễ sử dụng | API cấp cao, giống SQL hoặc Pandas                | API cấp thấp, yêu cầu lập trình phức tạp         |
+|Linh hoạt  | Ít linh hoạt hơn, phù hợp cho dữ liệu có cấu trúc | Rất linh hoạt, phù hợp với dữ liệu không cấu trúc|
+|Hỗ trợ SQL | Có, tích hợp chặt chẽ với SparkSQL                | Không hỗ trợ trực tiếp SQL                       |
 
 ### Hadoop HDFS
 #### Hadoop ecosystem là 1 hệ sinh thái gồm nhiều thành phần kết hợp lẫn nhau để hỗ trợ xử lý dữ liệu lớn:
