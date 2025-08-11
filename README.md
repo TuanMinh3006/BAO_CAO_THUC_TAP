@@ -208,6 +208,17 @@
       - saveAsTextfile: Lưu dữ liệu từ RDD(hoặc DataFrame sau khi chuyển sang RDD) thành các file văn bản trong một thư mực được chỉ định.
    - RDD có tính không thể thay đổi: 1 khi RDD đã khởi tạo thì không thể thay đổi được.
 #### DataFrame
+* Trong Apache Spark, DataFrame là một cấu trúc dữ liệu phân tán, được tổ chức theo dạng bảng với các cột có tên và kiểu dữ liệu, tương tự như bảng trong CSDL trong Pandas(Python). Nó là một phần quan trọng của Spark SQL, được thiết kế để xử lý dữ liệu (bigdata) một cách hiệu quả trên hệ thống phân tán. Trong các hàng và các cột:
+   - Mỗi cột có một tên và một kiểu dữ liệu cụ thể (Ví dụ: String, Integer, Double, ...)
+   - Dữ liệu được phân tán trên nhiều node trong 1 cụm spark, cho phép xử lý // và mở rộng quy mô
+* Là một abstraction cấp cao so với RDD
+#### So Sánh RDD với DataFrame:
+|Tiêu chi | DataFrame | RDD |
+|Cấu trúc | Dữ liệu dạng bảng, có schema cố định | Tập hợp các đối tượng phân tán, không schema |
+|Dễ sử dụng | API cấp cao, giống SQL hoặc Pandas | API cấp thấp, yêu cầu lập trình phức tạp|
+|Linh hoạt| Ít linh hoạt hơn, phù hợp cho dữ liệu có cấu trúc | Rất linh hoạt, phù hợp với dữ liệu không cấu trúc|
+|Hỗ trợ SQL| Có, tích hợp chặt chẽ với SparkSQL| Không hỗ trợ trực tiếp SQL|
+
 ### Hadoop HDFS
 #### Hadoop ecosystem là 1 hệ sinh thái gồm nhiều thành phần kết hợp lẫn nhau để hỗ trợ xử lý dữ liệu lớn:
 * Các phần mềm sẽ sử dụng cho từng giai đoạn:
