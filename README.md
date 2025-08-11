@@ -182,6 +182,32 @@
    - Hiệu suất thấp hơn so với star snow vì phải join nhiều bảng
 ## Tuần 3: BigData - Batch Processing
 ### Apache Spark (RDD, DataFrame)
+#### Apache Spark là một hệ thống xử lý phân tán mã nguồn mở, được phát triển để xử lý khối lượng cộng việc dữ liệu lớn một cách hiệu quả.Apache nổi bật ở khả năng ghi vào bộ nhớ đệm trong bộ nhớ và thực thi các truy vấn tối ưu hóa, giúp cho tối ưu hóa việc phân tích dữ liệu.
+#### Spark gồm các thành phần chính sau:
+* Spark Core: thành phần cốt lõi, chịu trách nhiệm quản lý bộ nhớ, lịch trình, và tương tác với các hệ thống lưu trữ
+* Spark SQL: Hỗ trợ truy vấn dữ liệu tương tác với tốc độ nhanh và độ trễ thấp
+* Spark streaming: Cung cấp khả năng phân tích dữ liệu thời gian thực
+* Mlib: thư viện máy học, hỗ trợ thực hiện các thuật toán máy học trên quy mô lớn
+* GraphX: khung xử lý đồ thị phân tán, giúp người dùng thực hiện các bài toán liên quan đến đồ thị.
+#### RDD (resilient distributed dataset):
+* RDD chia phân vùng và xử lý các phân vùng đó song song và cùng 1 lúc luôn.
+* Các loại thao tác làm việc với RDD: transformations(biến đổi) và actions(hành động).
+   - Transformation (Phần lệnh):
+     - Map: áp dụng 1 hàm lên từng phần tử trong Dataframe/RDD và trả về một DataFrame/RDD mới với các phần tử đã được biến đổi.
+     - Filter: Lọc các phần tử trong DataFrame/RDD thỏa mãn 1 điều kiện nhất định.
+     - flatMap: Áp dụng một hàm lên từng phần tử trong RDD và “Làm phẳng” kết quả để tạo ra 1 RDD mới(tức là loại bỏ cấu trúc lồng nhau)
+     - distinct: Loại bỏ các phần tử trùng lặp trong DataFrame/RDD, trả về tập dữ liệu với các giá trị duy nhất
+     - union:Kết hợp 2 dataframe/RDD thành 1 Datafram/RDD duy nhất , giữ nguyên tất cả các bản ghi(bao gồm cả trùng lặp)
+     - join:Kết hợp 2 DataFrame dựa trên một điều kiện chung(cột khóa), tương tự phép nối trong SQL
+     - groupBy:Nhóm các bản ghi trong DataFrame theo một hoặc nhiều cột, thường kết hợp các hàm tổng hợp như count,sum,avg,…
+   - Action (Phần thực thi các lệnh):
+      - collect: Thu thập toàn bộ dữ liệu từ RDD hoặc Dataframe và trả về dưới dạng 1 mảng array hoặc danh sách list tại driver node
+      - take: Lấy n phần tử đầu tiên từ RDD hoặc Dataframe và trả về dưới dạng mảng tại driver
+      - count: đếm tổng số bản ghi(row) trong RDD hoặc DataFrame
+      - reduce: Áp dụng một hàm giảm(reduction dunction) để gộp các phần tử trong RDD thành 1 giá trị duy nhất.
+      - saveAsTextfile: Lưu dữ liệu từ RDD(hoặc DataFrame sau khi chuyển sang RDD) thành các file văn bản trong một thư mực được chỉ định.
+   - RDD có tính không thể thay đổi: 1 khi RDD đã khởi tạo thì không thể thay đổi được.
+#### DataFrame
 ### Hadoop HDFS
 #### Hadoop ecosystem là 1 hệ sinh thái gồm nhiều thành phần kết hợp lẫn nhau để hỗ trợ xử lý dữ liệu lớn:
 * Các phần mềm sẽ sử dụng cho từng giai đoạn:
