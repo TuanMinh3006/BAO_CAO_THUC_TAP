@@ -1,6 +1,6 @@
 # BAO_CAO_THUC_TAP
 ## Tuần 1: Nền tảng cơ bản
-- Python
+### Python
 - SQL cơ bản
 * Gồm 4 loại : DDL,DML,DCL,TCL
 * DDL(Data Definition Language): định nghĩa cấu trúc CSDL(CREATE,DROP,ALTER)
