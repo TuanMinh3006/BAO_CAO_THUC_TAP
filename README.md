@@ -48,11 +48,31 @@ ROLLBACK: Hủy bỏ tất cả các thay đổi trong giao dịch, đưa cơ s�
 * ifconfig: hiển thị và cấu hình system network 
 * curl: đọc nội dung 
 * wget: download file từ URL
-
-## Tuần 2: Kiến trúc dữ liệu
 ### MySQL
-* MySQL là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS - Relational Database Management System) mã nguồn mở, được sử dụng rộng rãi trong các ứng dụng web và doanh nghiệp. MySQL được phát triển bởi Oracle Corporation và nổi tiếng với tốc độ, độ tin cậy, và tính dễ sử dụng. Nó hỗ trợ chuẩn SQL và được sử dụng trong nhiều ứng dụng như WordPress, Drupal, và các hệ thống thương mại điện tử.
-* Đặc điểm chính là:
+#### MySQL là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS - Relational Database Management System) mã nguồn mở, được sử dụng rộng rãi trong các ứng dụng web và doanh nghiệp. MySQL được phát triển bởi Oracle Corporation và nổi tiếng với tốc độ, độ tin cậy, và tính dễ sử dụng. Nó hỗ trợ chuẩn SQL và được sử dụng trong nhiều ứng dụng như WordPress, Drupal, và các hệ thống thương mại điện tử.
+#### Đặc điểm chính là:
+* Mã nguồn mở
+* Hiệu suất cao: Tối ưu cho các ứng dụng yêu cầu truy vấn nhanh và khối lượng dữ liệu lớn
+* Đa nền tảng: có thể chạy trên nhiều hệ điều hành khác nhau
+#### Các cài đặt trên Linux 
+* Cập nhật apt
+- sudo apt-get update
+- sudo apt update
+* Cài MySQL
+  - sudo apt install mysql_server
+* Check version
+   - MySQL --version
+ * Check status
+   -  sudo systemctl status MySQL
+ * Vào MySQL
+   - sudo MySQL -u root
+  * Thoát
+    - Exit
+#### Tệp cấu hình thường nằm ở /etc/mysql/my.cnf và 1 số thông số quan trọng:
+* Bind-address: quy định địa chỉ IP mà Mysql lắng nghe
+* Max_connections: số lượng connect đồng thời tối đa
+## Tuần 2: Kiến trúc dữ liệu
+
 * 
 ## Tuần 3: BigData - Batch Processing
 -
