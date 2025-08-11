@@ -7,8 +7,8 @@
 * DML(Data Manipulation Language): Thao tác dữ liệu(SELECT, INSERT ,UPDATE, DELETE)
 * DCL(Data control Language): quản lý quyền truy cập(Grant, Revoke)
 * TCL(Transaction Control Language): quản lý giao dịch (COMMIT, ROLLBACK)
-- COMMIT: lưu vĩnh viễn tất cả các thay đổi được thực hiện trong giao dịch vào CSDL
-- ROLLBACK: Hủy bỏ tất cả các thay đổi trong giao dịch, đưa cơ sở dữ liệu về trạng thái trước khi giao dịch bắt đầu.
+ - COMMIT: lưu vĩnh viễn tất cả các thay đổi được thực hiện trong giao dịch vào CSDL
+ - ROLLBACK: Hủy bỏ tất cả các thay đổi trong giao dịch, đưa cơ sở dữ liệu về trạng thái trước khi giao dịch bắt đầu.
 ### Linux command line: Các câu lệnh cơ bản trong shell
 #### Câu lệnh lấy thông tin:
   * Whoami: lấy tên username
@@ -56,8 +56,8 @@
 * Đa nền tảng: có thể chạy trên nhiều hệ điều hành khác nhau
 #### Các cài đặt trên Linux 
 * Cập nhật apt
-- sudo apt-get update
-- sudo apt update
+ - sudo apt-get update
+ - sudo apt update
 * Cài MySQL
   - sudo apt install mysql_server
 * Check version
