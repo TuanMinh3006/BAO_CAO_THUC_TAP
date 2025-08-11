@@ -161,7 +161,7 @@
    - Linh hoạt hơn, dễ dàng thay đổi logic chuyển đổi sau khi dữ liệu đã được tải.
 * Nhược điểm:
    - Dữ liệu thô có  thể chiếm nhiều không gian lưu trữ hơn trước khi chuyển đổi.
-#### Schema Snow vs Schema Star:
+#### Schema Snowflake vs Schema Star:
 ##### Schema Star:
 * Star là 1 kiểu cơ sở dữ liệu gồm 1 bảng Fact(bảng sự kiện) và nhiều bảng Dimension(bảng chiều)
 *  Bảng Fact là bản trung tâm của schema star, chứa các số liệu định lượng hoặc các sự kiên cần phân tích.Gồm khóa ngoại và các cột số liệu,…
@@ -171,8 +171,8 @@
    - Dễ hiêu và sử dụng: cấu trúc đơn giản
 * Nhược điểm:
    - Dư thừa dữ liệu: do không được chuẩn hóa, dữ liệu có thể lặp lại trong các bảng dimension, dẫn đến tang kích thước lưu trữ.
-##### Schema Snow
-* Là một biến thể của schema star, trong đó các bảng dimension được chuẩn hóa thành nhiều bảng liên quan, tạo ra cấu trúc phức tạp hơn, giống hình bông tuyết.=> khiến cho schema snow tạo ra nhiều lớp bảng hơn so với schema star.
+##### Schema Snowflake
+* Là một biến thể của schema star, trong đó các bảng dimension được chuẩn hóa thành nhiều bảng liên quan, tạo ra cấu trúc phức tạp hơn, giống hình bông tuyết.=> khiến cho schema Snowflake tạo ra nhiều lớp bảng hơn so với schema star.
 * Ưu điểm:
    - Tiết kiệm không gian lưu trữ: do dữ liệu được chuẩn hóa, tránh lặp lại thông tin
    - Dễ bảo trì và mở rộng: phù hợp với các hệ thống có dữ liệu phức tạp, nhiều mối quan hệ
