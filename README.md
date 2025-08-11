@@ -198,7 +198,7 @@
    - Node: Là hệ thống duy nhất chịu trách nhiệm và xử lý dữ liệu.
    - Có 2 loại Node: Primary node(Master Node) và secondary Node(Data Node)
         - Namenode: là node chính, chịu trách nhiệm quản lý metadata của hệ thống tệp, bao gồm thông tin về cấu trúc thư mục, vị trí tệp và vị trí của các bản sao dữ liệu.Như một quản trị viên để theo dõi và phối hợp với các Datanode
-         - DataNode: là các node chứa dữ liệu thực tế, chịu trách nhiệm lưu trữ và truy xuất các data blocks theo sự điều phối của Name node.
+        - DataNode: là các node chứa dữ liệu thực tế, chịu trách nhiệm lưu trữ và truy xuất các data blocks theo sự điều phối của Name node.
    - Note: HDFS có cơ chế viết 1 lần và đọc nhiều lần. Mỗi tệp chỉ được ghi 1 lần sau khi khởi tạo và sau đó không được sửa đổi. Nếu muốn cập nhật thì dữ liệu sẽ được ghi dưới 1 tệp mới.
 
 ### Parquet/ORC
