@@ -270,6 +270,15 @@
 |ACIDTransactions|Ít hỗ trợ|Hộ trợ đầy đủ ACID transactions trong HIVE                       |
 |Phù hợp với dữ liệu lớn   |Có                                                               |Có                                                                                    |
 |Hiệu suất trong Analytics|Xuất sắc, đặc biệt với các tool như Apache Spark hoặc Apache Arrow|Tốt, phù hợp với các framewordks dựa trên HIVE                                        |
+
+
+THỰC HÀNH LƯU TRỮ FILE DỮ LIỆU LÊN HADOOP BẰNG SPARK DƯỚI 2 DẠNG PARQUET VÀ ORC
+BẢNG SO SÁNH
+FILE THỰC HIỆN: vnm_children_under_five_2020.csv(1.47GB)
+|                  |Parent             |ORC                  |
+-------------------|-------------------|----------------------
+|Thời gian lưu trữ | 13.36s            |12.78s               |
+|Block size lưu trữ|128MB              |      256MB          |
 ## Tuần 4: Real-time Streaming
 -
 *
