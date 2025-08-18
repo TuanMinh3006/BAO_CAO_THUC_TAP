@@ -258,7 +258,18 @@
    - Hỗ trợ rất tốt cho các ACID transactions trong Hive, cũng cấp các tính năng như update, delete, và merge.
 * Nhược điểm:
    - Cộng đồng hỗ trợ ít
-   - Chi phí viết cao 
+   - Chi phí viết cao
+
+#### Bảng so sánh giữa ORC và Parquet
+
+------------------------------------------------------------------
+|            |     Parquet  |                           ORC      |
+------------------------------------------------------------------
+|Kiểu chứa dữ liệu| Dạng cột |              Dạng cột           |
+|   Schema   | Hỗ trợ các schema phức tạp và lồng nhau |      Hỗ trợ các dạng schema phức tạp nhưng ít linh hoạt hơn đối với schema lồng nhau |
+|ACIDTransactions|Ít hỗ trợ|Hộ trợ đầy đủ ACID transactions trong HIVE|
+|Phù hợp với dữ liệu lớn|Có|Có|
+|Hiệu suất trong Analytics|Xuất sắc, đặc biệt với các tool như Apache Spark hoặc Apache Arrow|Tốt, phù hợp với các framewordks dựa trên HIVE|
 ## Tuần 4: Real-time Streaming
 -
 *
