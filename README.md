@@ -272,13 +272,17 @@
 |Hiệu suất trong Analytics|Xuất sắc, đặc biệt với các tool như Apache Spark hoặc Apache Arrow|Tốt, phù hợp với các framewordks dựa trên HIVE                                        |
 
 
-THỰC HÀNH LƯU TRỮ FILE DỮ LIỆU LÊN HADOOP BẰNG SPARK DƯỚI 2 DẠNG PARQUET VÀ ORC
-BẢNG SO SÁNH
-FILE THỰC HIỆN: vnm_children_under_five_2020.csv(1.47GB)
+#### THỰC HÀNH LƯU TRỮ FILE DỮ LIỆU LÊN HADOOP BẰNG SPARK DƯỚI 2 DẠNG PARQUET VÀ ORC
+#### FILE THỰC HIỆN: vnm_children_under_five_2020.csv(1.47GB)
+#### BẢNG SO SÁNH
 |                  |Parent             |ORC                  |
--------------------|-------------------|----------------------
-|Thời gian lưu trữ | 13.36s            |12.78s               |
+-------------------|-------------------|---------------------|
+|Time lưu trữ      | 13.36s            |12.78s               |
+|Time read         | 1.15 s            |2.33  s              |
+|Time query        | 0.42 s            |1.35 s               |
 |Block size lưu trữ|128MB              |      256MB          |
+
+* **Nhận xét: **Đối với xử lý dữ liệu lớn, thì partquet vẫn là 1 kiểu dữ liệu tối ưu và hiệu suất hơn ORC khi dùng Spark
 ## Tuần 4: Real-time Streaming
 -
 *
