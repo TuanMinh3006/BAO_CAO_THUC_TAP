@@ -351,5 +351,52 @@
 * 	Xử lý dữ liệu từ cảm biến IoT.
 * 	Giám sát và phân tích dữ liệu mạng xã hội.
 * 	Xử lý sự kiện trong các ứng dụng tài chính.
+### Lambda Architecture
+#### Lambda là 1 trong 3 kiến trúc của bigdata . Bao gồm layer batch , stream, serving data cho người dùng cuối query.
+#### Các layer chính: Gồm 3 layer chính trong Lambda Architecture: 
+* Batch Layer (Cold process): Là lớp chứa dữ liệu thô đưa tơi và tính toàn để tạo các kết quả chính xác thường sử dụng các công cụ như Hadoop, Spark(Batch processing). Các quy trình sẽ xảy ra trong một khoảng time lâu dài(có thể vài phút hoặc tới hàng năm).
+* Stream Layer (Hot process or Speed layer) : Lớp luồng hoạt động trên dữ liệu thời gian thực để bổ sung cho các chế độ xem batch . Nó nhận được dữ liệu đến từ các máy khách khác nhau và thực hiện các bản cập nhật gia tăng cho kết quả lớp batch và lưu trữ chúng trong cơ sở dữ liệu dữ liệu được xử lý.
+* Serving layer: Là một máy chủ hoặc một bộ phận máy chủ xử lý đầu ra của các query khác nhau từ các mô-đun khác nhau (như mô-đun phân tích, mô-đun thông báo) bằng các sử dụng các kết quả được gửi từ các layer batch và stream
+#### Các tool sử dụng trong kiến trúc Lambda 
+* Apache Hadoop sử dụng để chứa data và tạo các cụm phân tán
+* HDFS : dùng để quản lý dữ liệu bất biến trong batch layer
+* Spark: sử dụng cho data streaming , xử lý đồ thị và quá trình data batch
+* Apache Cassandra sử dụng để chứa view real-time
+* Apache kafka : sử dụng để streaming data trong layer speed
+* Apache Storm: sử dụng để  cho các nhiệm vụ layer speed
+* Apache HBASE: sử dụng cho layer serving
+#### Ưu điểm 
+* Đây là sự cân bằng tốt giữa tốc độ, độ tin cậy, và khả năng mở rộng
+* Layer batch giúp quản lý dữ liệu lịch sử với bộ lưu trữ phân tán, có khả năng chịu lỗi, đảm bảo khả năng xảy ra lỗi thấp ngay cả khi hệ thống gặp sự cố
+* Layer Stream: quản lý dữ liệu real-time với phản hồi tức thì nhưng độ chính xác thấp hơn 1 chút.
+
+#### Nhược Điểm 
+* Phức tạp: Cần duy trì hai hệ thống riêng biệt (batch và streaming), dẫn đến chi phí phát triển và vận hành cao. 
+* Trùng lặp mã: Logic xử lý thường phải được triển khai hai lần (cho batch và streaming), gây khó khăn trong bảo trì. 
+* Độ trễ ở Batch Layer: Xử lý batch thường chậm hơn, không phù hợp cho các truy vấn cần phản hồi ngay lập tức.
+### Kappa Architecture
+#### Là 1 kiến trúc thiết kế dàng cho xử lý các real-time data streams. Loại bỏ các layer batch riêng biệt  và data sẽ được truyền dưới dạng stream (Luồng)
+#### Trong Kappa Architecture
+* Dữ liệu sẽ được thu thập như luồng từ các nguồn khác nhau 
+* Các công cụ xử lý luồng (như Apache Kafka, Apache Flink hoặc Apache Samza) xử lý các phép biến đổi, tập hợp và tính toán dữ liệu thời gian thực liên tục.
+* Kiến trúc xử lý cả dữ liệu mới và lịch sử một cách thống nhất, phát lại các sự kiện khi cần thiết để xử lý lại dữ liệu hoặc xử lý các lỗi.
+#### Mô hình này cung cấp khả năng mở rộng, đơn giản và xử lý dữ liệu có độ trễ thấp, phù hợp với các ứng dụng yêu cầu real-time cao
+#### Các thành phần chính : 
+* Nguồn dữ liệu: Data sẽ được ingested từ các nguồn real-time như các thiết bị IOT, log các app,… Các luồng dữ liệu này sẽ liên tục chảy vào hệ thống
+* Các công cụ sử lý luồng: Là thành phần quan trọng trong kiến trúc Kappa. Các công cụ như Apache Kafka, Apache Flink, Apache Samza xử lý các luồng data đến trong thời gian thực. Nó thực hiện các nhiệm vụ nhưu lọc, biến đổi, tổng hợp …. 
+* Nơi chứa data: Kết quả xử lsy stream được ghi vào 1 hệ thống lưu trữ có thể mở rộng, bền như CSDL Noquery (HBase, Cassandra) hoặc các hệ thống tệp phân tán (HDFS hoặc S3). Lưu trữ này thường được thiết kế để xử lý dữ liệu lịch sử và có thể dùng lại khi cần.
+* Layer Serving: phục vụ cho người dùng cuối hoặc hệ thống cuối. Cung cấp quyền truy cập vào các phân tích, dashboard và ứng dụng real-time dựa vào dữ liệu mới.
+* Cơ chế tái xử lý/ phản hồi: Bởi vì ko có quá trình Batch nên Kappa Architecture phụ thuộc vào khả năng tái xử lý sự kiện. Nếu dữ liệu cần xử lý lại (do code thay đổi hoặc bugs,..), hệ thống sẽ xử lý lại từ đầu.
+#### Ưu điểm
+* Đơn giản hơn: Chỉ cần duy trì một hệ thống xử lý luồng, giảm chi phí phát triển và bảo trì.
+* Mã thống nhất: Logic xử lý chỉ cần được viết một lần, áp dụng cho cả dữ liệu thời gian thực và lịch sử (bằng cách "phát lại" dữ liệu từ log).
+* Dễ mở rộng: Dễ dàng tích hợp với các hệ thống lưu trữ log như Kafka, hỗ trợ xử lý dữ liệu lớn.
+* Độ trễ thấp: Phù hợp với các ứng dụng cần phản hồi nhanh.
+#### Nhược điểm
+* Phụ thuộc vào hệ thống log: Yêu cầu một hệ thống lưu trữ log đáng tin cậy (như Kafka) với khả năng lưu trữ dữ liệu lâu dài.
+* Khó xử lý dữ liệu lịch sử lớn: Nếu cần xử lý lại toàn bộ dữ liệu lịch sử, việc "phát lại" (replay) dữ liệu có thể tốn tài nguyên.
+* Độ chính xác: Có thể không đạt độ chính xác cao như Batch Layer trong Lambda, đặc biệt nếu dữ liệu thô có lỗi.
+
+
 ## Tuần 5: Workflow & Inte
 ## Tuần 6: Production Pipeline
