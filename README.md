@@ -284,7 +284,72 @@
 
 * **Nhận xét: **Đối với xử lý dữ liệu lớn, thì partquet vẫn là 1 kiểu dữ liệu tối ưu và hiệu suất hơn ORC khi dùng Spark
 ## Tuần 4: Real-time Streaming
--
-*
+## Tuần 4: Real-time Streaming
+### Apache Kafka
+* Là một hệ thống publish-subcribe messaging system
+* Mã nguồn mở, được thiết kế để xử lý luồng dữ liệu lớn với độ trễ thấp và khả năng mở rộng cao
+* Kafka tổ chức data vào “Topics”. “Produce”(app để gửi data) đẩy “message” vào trong những topics và consumer (app đọc data) nhận chúng. 
+#### Các thành phần chính của Apache Kafka
+##### Kafka broker
+*	Là một server của kafka để lưu trữ dữ liệu. Thông thường cụm kafka bao gồm nhiều broker làm việc cung nhau để cung cấp khả năng mở rông, chịu lỗi và tính high availability. Mỗi broker sẽ chịu trách nhiệm chứa và làm các việc liên quan tới "topic"
+##### Producer
+* Là nơi sẽ gửi các “messages” tới các “topic” của kafka. Nó sẽ push data vào trong hệ thống kafka. Producers sẽ quyết định rằng “message”  nên đi đến “Topic” nào
+##### Kafka Topic
+* Là các danh mục hoặc các kênh , nơi là dữ liệu được tổ chức thành các chủ đề “Topic”.
+##### Consumers và consumer groups
+* Là ứng dụng đọc message từ các topic kafka. 
+* Các consumers thuộc một nhóm có thể đọc các topic tương tự nhau. Nhưng mỗi message phải được thực hiện bởi 1 consumers trong nhóm. Điều này giúp cân bằng tải và cho phép các “consumer” có thể đọc  message từ bất kỳ offset nào.
+* Partitions: Cho phép bạn xử lý song song các topic bằng cách chia các data trong 1 topic qua nhiều brokers
+##### Zookeeper
+* Kafka dùng apache Zookeeper để quản lý metadata, kiểm soát access vào các tài nguyên Kafka.Zookeeper đảm bảo tính high availability bằng cách chắc chắn tằng cụm Kafka vẫn hoạt động ngay cả khi 1 broker lỗi.
+##### Cách Kafka hoạt động :
+###### Bước 1: Producers gửi data
+* Producers sẽ tạo data và gửi nó vào kafka
+* Data có thể bao gồm : logs, giao dịch, events,…
+* Kafka chia dữ liệu thành các phần nhỏ gọi là partitons , giúp xử lý dễ dàng hơn khi xử lý dữ liệu lớn.
+###### Bước 2: Kafka chứa dữ liệu
+* Tổ chức data thành các “topic” (dữ liệu sẽ được lưu ở đây 1 khoản thời gian nhất định)
+* Ngay sau khi consumer đọc data thì kafka sẽ xóa dữ liệu ngay lập tức
+* Để tránh mất dữ liệu, kafka sẽ nhân bản và lưu dữ liệu vào 1 server khác
+###### Bước 3: Consumer đọc dữ liệu
+* Cosumer sẽ subscribe các topic và đọc các message
+* Consumers có thể chọn nơi để bắt đầu đọc, mặc dù nó là message mới nhất hoặc điểm gần nhất
+###### Bước 4: Kafka cân bằng tải
+* Zookeeper giúp kafka quản lý server nào chịu trách nhiệm chứa và phân phối dữ liệu
+* Nếu 1 server tự sub thì kafka sẽ tự động chuyển dữ liệu sang server khác
+###### Bước 5: Dữ liệu đã đc xử lý và sử dụng
+* Mỗi consumers nhận dữ liệu, nó có thể chứa ở database hoặc phân tích nó hoặc trigger các envens khác
+* Kakfa có thể làm việc với các tool như apache Spark, Flink, Hadoop để phân tích sâu hơn
+##### Các mô hình xử lý dữ liệu:
+###### Event streaming
+* Chức năng chính của kafka là event streaming, nơi mà:
+* Producers : đẩy message tới các topic kafka
+* Consumers: subscribe các topic và nhận message ngay khi nó tới.
+###### Message Queue 
+* Kafka có thể hoạt động gần như message queue bằng cách sử dụng consumer groups: 
+* Khi nhiều consumers thuộc 1 group, kafka sẽ phân phối các message và đảm bảo rằng mỗi message chỉ được xử lý một lần 
+* Cái này giúp cân bằng tải, giúp đảm bảo không có 1 consumer nào bị quá tải 
+###### Batch Processing
+* Kafka có thể xử lý batch processing, Message có thể chứa trong các topic kafka và sẽ xử lý sau
+* Các công cụ như apache Spark hoặc Hadoop có thể đọc dữ liệu từ Kafka theo đợt và phân tích nó 
+* Nhiều consumers có thể đọc các messae giống nhau và cho phép phân phối dữ liệu realtime
+###### Hybrid Model (Real-Time + Batch Processing)
+* Nó có hỗ trợ support cả real-time lẫn batch processing
+* Nó có thể gửi dữ liệu ngay lập tức để phân tích real-time trong khi lưu trữ nó để xử lý hàng loạt sau đó
+* Thường sử dụng Kafka Streams, Spark Streaming và FLink 
+#### Spark Streaming
+* Spark Streaming là một thành phần của Apache Spark, cho phép xử lý dữ liệu theo thời gian thực (real-time) bằng cách xử lý các luồng dữ liệu (data streams) theo từng lô nhỏ (micro-batches). Nó tích hợp với hệ sinh thái Spark, tận dụng khả năng xử lý dữ liệu phân tán và tính toán song song để phân tích các luồng dữ liệu lớn từ nhiều nguồn như Kafka, Flume, hoặc socket.
+##### Đặc điểm chính:
+* •	Xử lý micro-batch: Dữ liệu được thu thập và xử lý trong các khoảng thời gian ngắn (thường là vài giây), thay vì xử lý từng bản ghi riêng lẻ như các hệ thống streaming truyền thống.
+* •	Tích hợp với Spark: Có thể sử dụng các API của Spark (như Spark SQL, MLlib) để phân tích dữ liệu streaming.
+* •	Khả năng mở rộng: Hỗ trợ xử lý dữ liệu lớn với độ trễ thấp trên các cụm phân tán.
+* •	Tính chịu lỗi: Dữ liệu được lưu trữ tạm thời trong bộ nhớ và có cơ chế khôi phục lỗi (fault tolerance) thông qua RDD (Resilient Distributed Dataset).
+* •	DStream: Khái niệm cốt lõi, biểu diễn luồng dữ liệu như một chuỗi các RDD được xử lý liên tục.
+
+##### Ứng dụng:
+* •	Phân tích log thời gian thực.
+* •	Xử lý dữ liệu từ cảm biến IoT.
+* •	Giám sát và phân tích dữ liệu mạng xã hội.
+* •	Xử lý sự kiện trong các ứng dụng tài chính.
 ## Tuần 5: Workflow & Inte
 ## Tuần 6: Production Pipeline
