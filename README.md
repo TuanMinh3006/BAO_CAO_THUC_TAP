@@ -340,16 +340,16 @@
 #### Spark Streaming
 * Spark Streaming là một thành phần của Apache Spark, cho phép xử lý dữ liệu theo thời gian thực (real-time) bằng cách xử lý các luồng dữ liệu (data streams) theo từng lô nhỏ (micro-batches). Nó tích hợp với hệ sinh thái Spark, tận dụng khả năng xử lý dữ liệu phân tán và tính toán song song để phân tích các luồng dữ liệu lớn từ nhiều nguồn như Kafka, Flume, hoặc socket.
 ##### Đặc điểm chính:
-* •	Xử lý micro-batch: Dữ liệu được thu thập và xử lý trong các khoảng thời gian ngắn (thường là vài giây), thay vì xử lý từng bản ghi riêng lẻ như các hệ thống streaming truyền thống.
-* •	Tích hợp với Spark: Có thể sử dụng các API của Spark (như Spark SQL, MLlib) để phân tích dữ liệu streaming.
-* •	Khả năng mở rộng: Hỗ trợ xử lý dữ liệu lớn với độ trễ thấp trên các cụm phân tán.
-* •	Tính chịu lỗi: Dữ liệu được lưu trữ tạm thời trong bộ nhớ và có cơ chế khôi phục lỗi (fault tolerance) thông qua RDD (Resilient Distributed Dataset).
-* •	DStream: Khái niệm cốt lõi, biểu diễn luồng dữ liệu như một chuỗi các RDD được xử lý liên tục.
+* 	Xử lý micro-batch: Dữ liệu được thu thập và xử lý trong các khoảng thời gian ngắn (thường là vài giây), thay vì xử lý từng bản ghi riêng lẻ như các hệ thống streaming truyền thống.
+* 	Tích hợp với Spark: Có thể sử dụng các API của Spark (như Spark SQL, MLlib) để phân tích dữ liệu streaming.
+* 	Khả năng mở rộng: Hỗ trợ xử lý dữ liệu lớn với độ trễ thấp trên các cụm phân tán.
+* 	Tính chịu lỗi: Dữ liệu được lưu trữ tạm thời trong bộ nhớ và có cơ chế khôi phục lỗi (fault tolerance) thông qua RDD (Resilient Distributed Dataset).
+* 	DStream: Khái niệm cốt lõi, biểu diễn luồng dữ liệu như một chuỗi các RDD được xử lý liên tục.
 
 ##### Ứng dụng:
-* •	Phân tích log thời gian thực.
-* •	Xử lý dữ liệu từ cảm biến IoT.
-* •	Giám sát và phân tích dữ liệu mạng xã hội.
-* •	Xử lý sự kiện trong các ứng dụng tài chính.
+* 	Phân tích log thời gian thực.
+* 	Xử lý dữ liệu từ cảm biến IoT.
+* 	Giám sát và phân tích dữ liệu mạng xã hội.
+* 	Xử lý sự kiện trong các ứng dụng tài chính.
 ## Tuần 5: Workflow & Inte
 ## Tuần 6: Production Pipeline
