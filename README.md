@@ -351,7 +351,7 @@
 * 	Giám sát và phân tích dữ liệu mạng xã hội.
 * 	Xử lý sự kiện trong các ứng dụng tài chính.
 ### Lambda Architecture
-https://github.com/TuanMinh3006/BAO_CAO_THUC_TAP/issues/1
+### <img width="747" height="344" alt="Image" src="https://github.com/user-attachments/assets/9f8fe0e1-0e87-473c-8ec1-b6fb3c2f5c3e" />
 #### Lambda là 1 trong 3 kiến trúc của bigdata . Bao gồm layer batch , stream, serving data cho người dùng cuối query.
 #### Các layer chính: Gồm 3 layer chính trong Lambda Architecture: 
 * Batch Layer (Cold process): Là lớp chứa dữ liệu thô đưa tơi và tính toàn để tạo các kết quả chính xác thường sử dụng các công cụ như Hadoop, Spark(Batch processing). Các quy trình sẽ xảy ra trong một khoảng time lâu dài(có thể vài phút hoặc tới hàng năm).
