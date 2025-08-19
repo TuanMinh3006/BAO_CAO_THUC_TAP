@@ -284,7 +284,6 @@
 
 * **Nhận xét: **Đối với xử lý dữ liệu lớn, thì partquet vẫn là 1 kiểu dữ liệu tối ưu và hiệu suất hơn ORC khi dùng Spark
 ## Tuần 4: Real-time Streaming
-## Tuần 4: Real-time Streaming
 ### Apache Kafka
 * Là một hệ thống publish-subcribe messaging system
 * Mã nguồn mở, được thiết kế để xử lý luồng dữ liệu lớn với độ trễ thấp và khả năng mở rộng cao
@@ -352,6 +351,7 @@
 * 	Giám sát và phân tích dữ liệu mạng xã hội.
 * 	Xử lý sự kiện trong các ứng dụng tài chính.
 ### Lambda Architecture
+https://github.com/TuanMinh3006/BAO_CAO_THUC_TAP/issues/1
 #### Lambda là 1 trong 3 kiến trúc của bigdata . Bao gồm layer batch , stream, serving data cho người dùng cuối query.
 #### Các layer chính: Gồm 3 layer chính trong Lambda Architecture: 
 * Batch Layer (Cold process): Là lớp chứa dữ liệu thô đưa tơi và tính toàn để tạo các kết quả chính xác thường sử dụng các công cụ như Hadoop, Spark(Batch processing). Các quy trình sẽ xảy ra trong một khoảng time lâu dài(có thể vài phút hoặc tới hàng năm).
