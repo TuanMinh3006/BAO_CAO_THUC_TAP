@@ -71,6 +71,12 @@
 #### Tệp cấu hình thường nằm ở /etc/mysql/my.cnf và 1 số thông số quan trọng:
 * Bind-address: quy định địa chỉ IP mà Mysql lắng nghe
 * Max_connections: số lượng connect đồng thời tối đa
+### Các cách tối ưu SQL query
+* Tránh sử dụng SELECT * , Chỉ định các cột cần thiết để SELECT ==> Giảm lượng truy xuất
+* Tạo index trên các cột thường xuyên được sử dụng trong điều kiện WHERE, JOIN, GROUP BY, hoặc ORDER BY.(Index có 2 loại B_tree và Hash. B_Tree dùng cho các truy vấn <,>,>=,<= còn Hash thì dùng cho truy vấn =, !=)
+* Chọn loại JOIN phù hợp (INNER JOIN thường nhanh hơn LEFT JOIN hoặc RIGHT JOIN).
+* Thay subquery bằng JOIN hoặc WITH (Common Table Expression - CTE) khi có thể, vì subquery thường chậm hơn.
+* Khi chỉ cần một số lượng bản ghi nhất định, hãy thêm LIMIT hoặc TOP. 
 ## Tuần 2: Kiến trúc dữ liệu
 ### Khái niệm OLTP vs OLAP 
 #### OLTP(Online Transaction Processing):
