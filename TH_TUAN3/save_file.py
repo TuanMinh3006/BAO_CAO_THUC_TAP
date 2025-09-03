@@ -6,8 +6,7 @@ spark=SparkSession.builder \
     .appName("SaveToHDFS")\
     .getOrCreate()
 
-    #.config("spark.hadoop.fs.defaultFS", "hdfs://localhost:9870")\
-
+   
 url="/home/hadoopuser/vnm_children_under_five_2020.csv"
 df=spark.read.csv(url, header=True, inferSchema=True)
 df.show()
