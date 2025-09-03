@@ -121,6 +121,15 @@
    - Không thể  đạt được cả 3 tính cùng 1 lúc vì:
       - Để đảm bảo tính Consistency: Hệ thống phải đảm bảo rắng all các nút đều thấy dữ liệu.Nếu có phân vùng mạng nào mà node không cập nhật đc thông tin mới nhất thì hệ thống sẽ cô lập các node đó khỏi các yêu cầu(read/write) để có thể đảm bảo tính.
       - Đảm bảo tính  Availability: Hệ thống phải phản hồi mọi yêu cầu, ngay cả khi có lỗi phân vùng mạng. Điều này khiến cho việc các node trả về có thể là data cũ hoặc chưa đồng bộ => dẫn tới mất tính Consistency.
+#### CAP trong NOSQL
+* NoSQL được thiết kế để đáp ứng các ứng dụng hiện đại với yêu cầu về khả năng mở rộng, hiệu suất cao, và xử lý dữ liệu lớn và được thiết kế cho môi trường phân tán. Vậy nên Partition Tolerance là bắt buộc trong các hệ thống phân tán
+* Các hệ thống NoSQL thường được thiết kế ưu tiên một trong hai mô hình:
+   - CP (Consistency + Partition Tolerance): Ưu tiên tính nhất quán và chịu đựng phân vùng, nhưng có thể hy sinh tính khả dụng. Ví dụ: Nếu có phân vùng mạng, hệ thống có thể từ chối một số yêu cầu để đảm bảo dữ liệu nhất quán. Các CSDL như MongoDB (ở chế độ nhất quán cao) hoặc HBase thường thuộc nhóm này.
+   - AP (Availability + Partition Tolerance): Ưu tiên tính khả dụng và chịu đựng phân vùng, nhưng có thể trả về dữ liệu không nhất quán tạm thời (eventual consistency). Ví dụ: Cassandra hoặc DynamoDB thường thuộc nhóm này.
+* Ứng dụng trong NoSQL
+   - Cassandra: Ưu tiên AP, cung cấp tính khả dụng cao và eventual consistency, phù hợp cho các ứng dụng cần xử lý khối lượng lớn yêu cầu mà không cần nhất quán tức thời.
+   - MongoDB: Có thể cấu hình để ưu tiên CP hoặc AP, tùy thuộc vào yêu cầu về tính nhất quán của ứng dụng.
+   - Redis: Thường ưu tiên tính khả dụng và hiệu suất, nhưng có thể không đảm bảo tính nhất quán mạnh trong một số trường hợp phân vùng.
 ### ACID và BASE 
 #### ACID: Atomicity,Consistency,isolation,Durability  là các tập hợp bảo đảm tính toàn vẹn của giao dịch trong CSDL
 * A.Atomicity (Tính nguyên tử): Đảm bảo rằng một giao dịch được thực hiện hoàn toàn hoặc không thực hiện gì cả. Nếu bất kỳ phần nào của giao dịch thất bại, toàn bộ giao dịch sẽ bị hủy bỏ (rollback)
@@ -212,14 +221,30 @@
    - Mỗi cột có một tên và một kiểu dữ liệu cụ thể (Ví dụ: String, Integer, Double, ...)
    - Dữ liệu được phân tán trên nhiều node trong 1 cụm spark, cho phép xử lý // và mở rộng quy mô
 * Là một abstraction cấp cao so với RDD
-#### So Sánh RDD với DataFrame:
-|Tiêu chi   | DataFrame                                         | RDD                                              |
-|-----------|---------------------------------------------------|--------------------------------------------------|
-|Cấu trúc   | Dữ liệu dạng bảng, có schema cố định              | Tập hợp các đối tượng phân tán, không schema     |
-|Dễ sử dụng | API cấp cao, giống SQL hoặc Pandas                | API cấp thấp, yêu cầu lập trình phức tạp         |
-|Linh hoạt  | Ít linh hoạt hơn, phù hợp cho dữ liệu có cấu trúc | Rất linh hoạt, phù hợp với dữ liệu không cấu trúc|
-|Hỗ trợ SQL | Có, tích hợp chặt chẽ với SparkSQL                | Không hỗ trợ trực tiếp SQL                       |
+#### Dataset
+* Dataset là một một cấu trúc dữ liệu cấp cao trong Spark, kết hợp lợi ích của RDD (kiểm soát mạnh mẽ) và DataFrame (tối ưu hóa hiệu suất). Dataset là một tập hợp phân tán các đối tượng được định kiểu (strongly-typed) theo một schema.
+* Đặc điểm:
+   - Chỉ có trong Scala và Java: Dataset không được hỗ trợ trực tiếp trong Python hoặc R (trong Python, DataFrame tương đương với Dataset không định kiểu).
+   - Kiểm tra kiểu tĩnh: Dataset yêu cầu định nghĩa kiểu dữ liệu cụ thể (ví dụ: Dataset[Person]), giúp phát hiện lỗi sớm trong quá trình biên dịch.
+   - Hiệu suất cao: Tương tự DataFrame, Dataset được hưởng lợi từ Catalyst Optimizer và mã hóa Tungsten để tối ưu hóa bộ nhớ và CPU.
+   - Linh hoạt hơn DataFrame: Dataset hỗ trợ các phép biến đổi hàm (functional transformations) giống RDD, nhưng vẫn giữ được lợi ích của DataFrame.
 
+#### So Sánh RDD với DataFrame và Dataset: 
+|Tiêu chí          | RDD                               | DataFrame                          | Dataset                             |
+|------------------|-----------------------------------|------------------------------------|-------------------------------------|
+|Cấp độ            |Cấp thấp                           |  Cấp cao                           |   Cấp cao                           |
+|Schema            | Không có                          |   Có (cột có tên, kiểu dữ liệu)    |    Có, schema rõ ràng và type-safe    |
+|Hiệu suất         | Thấp hơn, cần tối ưu thủ công     |   Cao (Catalyst, Tungsten)         |    Cao (Catalyst, Tungsten)         |
+|Hỗ trợ SQL        | Có, tích hợp chặt chẽ với SparkSQL|   Không hỗ trợ trực tiếp SQL       |    Có hỗ trợ SQL                    |
+|Ngôn ngữ hỗ trợ   | Python, Scala, Java, R            |   Python, Scala, Java, R           |    Chỉ Scala, Java                  |
+|Tính linh hoạt    | Rất linh hoạt                     |   Ít linh hoạt hơn RDD             |    Linh hoạt hơn DataFrame          |
+|Dễ sử dụng        | Khó, cần viết nhiều code          |   Dễ, giống SQL                    |    Dễ, kết hợp SQL và hàm           |
+|Ứng dụng          | Dữ liệu không cấu trúc            |  Dữ liệu có cấu trúc               |  Dữ liệu có cấu trúc + lập trình hàm|
+
+* NOTE: 
+   - Catalyst là bộ tối ưu hóa truy vấn (query optimizer) của Spark SQL và DataFrame API. Nó được giới thiệu từ Spark 1.2 và là một phần cốt lõi của Spark, sử dụng ngôn ngữ lập trình Scala để xây dựng một optimizer linh hoạt, có thể mở rộng.Lợi ích: Giúp truy vấn nhanh hơn, tiết kiệm tài nguyên (CPU, memory), đặc biệt với dataset lớn từ các nguồn như Parquet, Hive, hoặc JDBC. Ví dụ, nếu dataset của bạn có hàng triệu dòng, Catalyst có thể giảm dữ liệu đọc từ đĩa bằng cách chỉ tải những phần cần thiết.
+   - Tungsten (hay Project Tungsten) là engine thực thi (execution engine) của Spark, được giới thiệu từ Spark 1.5. Nó tập trung vào tối ưu hóa ở lớp vật lý (physical layer), cải thiện hiệu suất CPU và memory bằng cách tận dụng phần cứng tốt hơn. Tungsten làm việc chặt chẽ với Catalyst: Catalyst tạo kế hoạch logic, còn Tungsten thực thi kế hoạch đó một cách hiệu quả.Lợi ích: Tăng tốc độ xử lý dataset lên 2-10 lần, đặc biệt trên cluster lớn, bằng cách giảm lãng phí CPU và memory. Nó không áp dụng cho RDD (Resilient Distributed Datasets) mà chủ yếu cho DataFrame/SQL.
+   - Type_safe trong schema là Spark đảm bảo rằng các thao tác bạn thực hiện trên Dataset (như truy cập cột, xử lý dữ liệu) được kiểm tra kiểu dữ liệu ngay tại thời điểm biên dịch (compile-time, lúc chương trình được kiểm tra cú pháp, kiểu dữ liệu, và các quy tắc của ngôn ngữ lập trình), thay vì chỉ phát hiện lỗi tại thời điểm chạy (runtime, Đây là lúc mã thực sự được chạy, dữ liệu được xử lý, và các kết quả được tạo ra trên máy tính hoặc máy ảo).
 ### Hadoop HDFS
 #### Hadoop ecosystem là 1 hệ sinh thái gồm nhiều thành phần kết hợp lẫn nhau để hỗ trợ xử lý dữ liệu lớn:
 * Các phần mềm sẽ sử dụng cho từng giai đoạn:
