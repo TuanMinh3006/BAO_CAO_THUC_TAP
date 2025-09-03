@@ -400,55 +400,55 @@
 
 ## Tuần 5: Workflow & Inte
 ### Apache Airflow (DAGs, operators)
--   Là công cụ để lập lịch, quản lý, và giám sát các quy trình xử lý dữ liệu.Dùng để tự động hóa các quy trình xử lý dữ liệu phức tạp.
--   Là một công cụ điều phối luồng. Là nền tảng xây dựng và chạy luồng.
--   Một workflow thường được đại diện bởi 1  DAG
--   Kiến trúc của Airflow: 
-   -   Scheduler (Bộ lập lịch): Chịu trách nhiệm lập lịch và quản lý việc thực thi các DAG.
-      -   Scheduler liên thực quét thư mục DAG để phát hiện các DAG mới hoặc thay đổi
-      -   Kiểm tra trạng thái của các task trong CSDL metadata và quyết định task nào sẵn sàng chạy
-      -   Sử dụng các executor để phân phối tác vụ đến các worker
-   -   Executor (Bộ thực thi)
-      -   Quyết định các tác vụ được thực thi(Trên cùng máy hoặc phân tán)
-      -   Executor nhận lệnh từ Scheduler và gửi các tác vụ đến các worker để thực thi. 
-      -   Các loại excutor:
-         -   sequentialExecutor: chạy các task tuần tự trên cùng 1 máy
-         -   LocalExecutor: chạy nhiều tác vụ song song trên cùng 1 máy 
-         -   CeleryExecutor: Phân phối tác vụ đến các worker qua hàng đợi như RabbitMQ hoặc Redis, phù hợp với hệ thống phân tán
-         -   KubernetesExecutor: mỗi tác vụ chạy trong một pob Kubernetes riêng
-   -   Worker (Công nhân)
-      -   Thực thi các task được phân phối bởi executor
-      -   Mỗi worker là một tiến trình(process) hoặc pob (trong Kubernets) thực hiện các câu lệnh được định nghĩa trong operator(như BashOperator, PythonOperator)
-   -   Web Server (Máy chủ web)
-      -   Cung cấp giao diện UI cho người dùng để giám sát và quản lý DAG, tác vụ, trạng thái thực thi
-      -   Cho phép xem log, kích hoạt DAG, xóa các trạng thái tác vụ hoặc cấu hình hệ thống
-   -   Metadata Database (Cơ sở dữ liệu metadata)
-      -   Lưu trữ thông tin về DAG, trạng thái tác vụ, lịch sử thực thi, kết nối(connections), biến(variables) và cấu hình
-      -   Là nơi lưu trữ trạng thái cảu các thành phần để đảm bảo tính nhất quán
-   -   DAG Files (File DAG)
-      -   Là các file Python chứa định nghĩa của DAG, bao gồm các tác vụ, phụ thuộc và lịch trình
-      -   Được lưu trong thư mục dags_folder (mặc định là ~/airflow/dags)
-   -   Đặc điểm của Apache Airflow 
-      -   Tạo workflow bằng script Puthon
-      -   Có giao diện UI hữu ích 
-      -   Không giới hạn quy mô pipeline 
-      -   Opensource 
-   -   Nguyên tắc của apache Airflow : 
-      -   Scalable: có thể sẵn sàng mở rộng
-      -   Đa nhiệm: có thể chứa nhiều task đồng thời 
-      -   Extensible : có thể mở rộng thư viện phù hợp với môi trường 
+-  Là công cụ để lập lịch, quản lý, và giám sát các quy trình xử lý dữ liệu.Dùng để tự động hóa các quy trình xử lý dữ liệu phức tạp.
+-  Là một công cụ điều phối luồng. Là nền tảng xây dựng và chạy luồng.
+-  Một workflow thường được đại diện bởi 1  DAG
+-  Kiến trúc của Airflow: 
+   -  Scheduler (Bộ lập lịch): Chịu trách nhiệm lập lịch và quản lý việc thực thi các DAG.
+      -  Scheduler liên thực quét thư mục DAG để phát hiện các DAG mới hoặc thay đổi
+      -  Kiểm tra trạng thái của các task trong CSDL metadata và quyết định task nào sẵn sàng chạy
+      -  Sử dụng các executor để phân phối tác vụ đến các worker
+   -  Executor (Bộ thực thi)
+      -  Quyết định các tác vụ được thực thi(Trên cùng máy hoặc phân tán)
+      -  Executor nhận lệnh từ Scheduler và gửi các tác vụ đến các worker để thực thi. 
+      -  Các loại excutor:
+         -  sequentialExecutor: chạy các task tuần tự trên cùng 1 máy
+         -  LocalExecutor: chạy nhiều tác vụ song song trên cùng 1 máy 
+         -  CeleryExecutor: Phân phối tác vụ đến các worker qua hàng đợi như RabbitMQ hoặc Redis, phù hợp với hệ thống phân tán
+         -  KubernetesExecutor: mỗi tác vụ chạy trong một pob Kubernetes riêng
+   -  Worker (Công nhân)
+      -  Thực thi các task được phân phối bởi executor
+      -  Mỗi worker là một tiến trình(process) hoặc pob (trong Kubernets) thực hiện các câu lệnh được định nghĩa trong operator(như BashOperator, PythonOperator)
+   -  Web Server (Máy chủ web)
+      -  Cung cấp giao diện UI cho người dùng để giám sát và quản lý DAG, tác vụ, trạng thái thực thi
+      -  Cho phép xem log, kích hoạt DAG, xóa các trạng thái tác vụ hoặc cấu hình hệ thống
+   -  Metadata Database (Cơ sở dữ liệu metadata)
+      -  Lưu trữ thông tin về DAG, trạng thái tác vụ, lịch sử thực thi, kết nối(connections), biến(variables) và cấu hình
+      -  Là nơi lưu trữ trạng thái cảu các thành phần để đảm bảo tính nhất quán
+   -  DAG Files (File DAG)
+      -  Là các file Python chứa định nghĩa của DAG, bao gồm các tác vụ, phụ thuộc và lịch trình
+      -  Được lưu trong thư mục dags_folder (mặc định là ~/airflow/dags)
+-  Đặc điểm của Apache Airflow 
+   -  Tạo workflow bằng script Puthon
+   -  Có giao diện UI hữu ích 
+   -  Không giới hạn quy mô pipeline 
+   -  Opensource 
+-  Nguyên tắc của apache Airflow : 
+   -  Scalable: có thể sẵn sàng mở rộng
+   -  Đa nhiệm: có thể chứa nhiều task đồng thời 
+   -  Extensible : có thể mở rộng thư viện phù hợp với môi trường 
 
 ### DAGS
--   DAGS: directed Acyclic Graph: là một đồ thị có hướng không chu kỳ, mô tả tất cả các bước xử lý dữ liệu trong 1 quy trình.
--   Mỗi DAG được xác địng trong 1 file DAG, nó định nghĩa một quy trình xử lý dữ liệu, trong đó các nút là các tác vụ(tasks) và các cạnh là các phụ thuộc giữa các tác vụ
--   Các tác vụ trogn DAG thường được xử lý tuần tự hoặc song song theo một lịch được định sẵn
--   Thành phần của 1 DAG:
+-  DAGS: directed Acyclic Graph: là một đồ thị có hướng không chu kỳ, mô tả tất cả các bước xử lý dữ liệu trong 1 quy trình.
+-  Mỗi DAG được xác địng trong 1 file DAG, nó định nghĩa một quy trình xử lý dữ liệu, trong đó các nút là các tác vụ(tasks) và các cạnh là các phụ thuộc giữa các tác vụ
+-  Các tác vụ trogn DAG thường được xử lý tuần tự hoặc song song theo một lịch được định sẵn
+-  Thành phần của 1 DAG:
    -  Khai báo thư viện 
-   -  Đối sô DAG (DAG arguments)
+   -  Đối số DAG (DAG arguments)
    -  Định nghĩa DAG
    -  Định nghĩa task
    -  Task pipeline
--   Vòng đời của 1 trang thái task: 
+-  Vòng đời của 1 trang thái task: 
    -  No status: tác vụ chưa được xếp hàng để thực hiện
    -  Scheduled: Bộ lập lịch đã xác định rằng các phụ thuộc của nhiệm vụ được đáp ứng và đã lên lịch cho nó chạy
    -  Removed: Tác vụ đã bị mất khỏi DAG kể từ khi bắt đầu chạy
@@ -460,8 +460,7 @@
    -  Up for retry: Tác vụ không thành công nhưng vẫn còn các lần thử lại và sẽ được lên lịch lại.
 
 ### Task: 
--   Là một đơn vị cơ bản để thực hiện một công việc nhỏ trong quy trình xử lý dữ liệu. Mỗi task là một quy trình và có thể lập lịch thực hiện tùy theo các điều kiện cụ thể
-Một Task trong Airflow có các thuộc tính và phương thức sau: 
+-  Là một đơn vị cơ bản để thực hiện một công việc nhỏ trong quy trình xử lý dữ liệu. Mỗi task là một quy trình và có thể lập lịch thực hiện tùy theo các điều kiện cụ thể.Một Task trong Airflow có các thuộc tính và phương thức sau: 
    -  Task_id: định danh duy nhất của task trong DAG
    -  Owner: người sở hữu task
    -  Depends_on_past: xác định liệu task hiện tại có phụ thuộc vào kết quả của task trước đó không 
@@ -473,7 +472,7 @@ Một Task trong Airflow có các thuộc tính và phương thức sau:
    -  On_failure_callback: hàm được gọi khi task thất bại
    -  On_success_callback: hàm được gọi khi task thành công
 
-Operators
+### Operators
 -   Mỗi operator đại diện cho 1 công việc cụ thể trong quy trình.
 -   Các loại operator trong airflow được phân loại thành:
    -  Action Operators (Operator hành động): thực hiện các hành động cụ thể, như chạy lệnh, thực thi mã, hoặc gửi thông báo. Chúng thường được sử dụng để thực hiện các tác vụ xử lý hoặc thao tác cụ thể.
@@ -494,23 +493,23 @@ Operators
 
  
 ### Apache NiFi
--   Là một nền tảng tích hợp dữ liệu (data integration ) và xử lý luồng dữ liệu theo time thực hoặc theo lô(batch). Nifi được thiết kế để xử lý, chuyển đổi và định nghĩa tuyến dữ liệu từ nhiều nguồn đến nhiều đích khác nhau một cách dễ dàng và trực quan 
--   Điểm nổi bật của nifi là giao diện đồ họa(GUI) cho phép người dùng thiết kế luồng dữ liệu mà không cần viết mã phức tập
--   Các tính năng chính: 
+-  Là một nền tảng tích hợp dữ liệu (data integration ) và xử lý luồng dữ liệu theo time thực hoặc theo lô(batch). Nifi được thiết kế để xử lý, chuyển đổi và định nghĩa tuyến dữ liệu từ nhiều nguồn đến nhiều đích khác nhau một cách dễ dàng và trực quan 
+-  Điểm nổi bật của nifi là giao diện đồ họa(GUI) cho phép người dùng thiết kế luồng dữ liệu mà không cần viết mã phức tập
+-  Các tính năng chính: 
    -  Giao diện đồ họa than thiện: cung cấp giao diện kéo – thả đơn giản
    -  Xử lý dữ liệu linh hoạt: có thể xử lý dữ liệu theo realtime hoặc theo batch
    -  Hỗ trợ đa dạng nguồn dữ liệu: Nifi có thể kết nối nhiều nguồn CSDL như SQL,NoSQL, hệ thống tệp, API,Kafka,Hadoop,…
    -  Quản lý luồng dữ liệu(Data Provenance): Nifi theo dõi toàn bộ hành chính của dữ liệu từ nguồn tới đích, giúp kiểm tra và phân tích nguồn gốc dữ liệu
    -  Khả năng mở rộng: có thể mở rộng theo cluster để xử lý dữ liệu lớn
    -  Xử lý lỗi: có cơ chế xử lý lỗi linh hoạt, cho phép tái thử(reply), định tuyến lại hoặc lưu trữ dữ liệu lỗi.
--   Các thành phần chinhs: 
+-  Các thành phần chinhs: 
    -  Flow file:Đơn vị dữ liệu cơ bản trong Nifi, chứa nội dung dữ liệu (content) và các thuộc tính liên quan
    -  Processor: Thành phần thực hiện các tác vụ như đọc, ghi, chuyển đổi, định tuyến dữ liệu.
    -  Connection: kết nối giữa các processor để truyền dữ liệu, hỗ trợ cơ chế xếp hàng(queue) và ưu tiên
    -  Process group: nhóm các processor để tổ chức và tái sử dụng luồng dữ liệu
    -  Controller services: dịch vụ dùng hcung như kết nối cở sở dữ liệu, cấu hình SSL
    -  Templates: cho phép lưu và tái sử dụng các luồng dữ liệu đã thiết keks
--   Cách hoạt động
+-  Cách hoạt động
    -  Nifi hoạt động dựa trên khái niện dataflow. Người dùng thiết kế luồng dữ liệu bằng cách kéo thả các processor và kết nối chúng trên giao diện web
    -  Dữ liệu lấy từ nguồn(source), xử lý qua các bước(chuyển đổi, lọc, làm giàu,…) sau đó gửi tới đich
   
@@ -531,6 +530,6 @@ Operators
    -  Tích hợp B2B (Doanh nghiệp với Doanh nghiệp) Tích hợp API được sử dụng để kết nối giữa hai hoặc nhiều công ty/ tổ chức nhằm chia sẻ dữ liệu và tối ưu hóa quy trình kinh doanh. Ví dụ: Một công ty thương mại điện tử chia sẻ dữ liệu đơn hàng với đối tác vận chuyển.
    -  Chuyển giao dữ liệu theo lô (Batch Data Transfers) Chuyển giao dữ liệu theo lô liên quan đến việc xử lý các cơ sở dữ liệu lớn thành nhiều lô dữ liệu. Các lô này được tổng hợp hoặc thống nhất thành một định dạng dữ liệu duy nhất để có cái nhìn toàn diện và dễ hiểu hơn.
    -  Tự động hóa quy trình làm việc (Workflow Automation): Tích hợp API giúp tự động hóa các tác vụ và hoạt động của nhiều hệ thống hoặc ứng dụng, loại bỏ xử lý thủ công. Điều này giúp đơn giản hóa quy trình kinh doanh. Ví dụ: Gửi email tự động xác nhận sau khi đặt hàng là một trường hợp điển hình.
--  Đồng bộ dữ liệu thời gian thực (Real-time Data Syncing): Khi các hệ thống hoặc phần mềm kết nối với nhau, việc đồng bộ hóa dữ liệu là cần thiết. Tích hợp API đảm bảo rằng mọi dữ liệu được truyền giữa các hệ thống được đồng bộ hóa chính xác và tức thời.
--  Kết nối API tùy chỉnh (Custom API Connectors): Các kết nối API tùy chỉnh được thiết kế để đáp ứng nhu cầu tích hợp cụ thể của người dùng giữa các hệ thống hoặc ứng dụng. Mục đích là tạo ra các giải pháp tích hợp phù hợp với yêu cầu riêng biệt.
+   -  Đồng bộ dữ liệu thời gian thực (Real-time Data Syncing): Khi các hệ thống hoặc phần mềm kết nối với nhau, việc đồng bộ hóa dữ liệu là cần thiết. Tích hợp API đảm bảo rằng mọi dữ liệu được truyền giữa các hệ thống được đồng bộ hóa chính xác và tức thời.
+   -  Kết nối API tùy chỉnh (Custom API Connectors): Các kết nối API tùy chỉnh được thiết kế để đáp ứng nhu cầu tích hợp cụ thể của người dùng giữa các hệ thống hoặc ứng dụng. Mục đích là tạo ra các giải pháp tích hợp phù hợp với yêu cầu riêng biệt.
 ## Tuần 6: Production Pipeline
